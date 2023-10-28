@@ -52,7 +52,7 @@ public class AdjacencyListGraph<T> implements Graph<T> {
 			return false;
 		}
 		// Si el lado ya existe en el grafo, no se agrega el lado y se retorna false.
-		if (adjacencyList.get(from).contains(to) || adjacencyList.get(to).contains(from)) {
+		if (areConnected(from, to)) {
 			return false;
 		}
 		// Se añade el vértice 'to' a la lista de adyacencia de 'from'.
@@ -94,6 +94,25 @@ public class AdjacencyListGraph<T> implements Graph<T> {
 	 */
 	public boolean contains(T vertex) {
 		return adjacencyList.containsKey(vertex);
+	}
+
+	/**
+	 * Recibe dos vértices 'from' y 'to' y retorna true si existe una arista entre
+	 * ellos. Retorna false en caso contrario.
+	 * Complejidad: O(1).
+	 */
+	public boolean areConnected(T from, T to) {
+		// Si alguno de los vértices no existe en el grafo, no están conectados y se
+		// retorna false.
+		if (!contains(from) || !contains(to)) {
+			return false;
+		}
+		// Si el vértice 'to' está en la lista de adyacencia de 'from', están conectados
+		// y se retorna true.
+		if (adjacencyList.get(from).contains(to) && adjacencyList.get(to).contains(from)) {
+			return true;
+		}
+		return false;
 	}
 
 	/*
