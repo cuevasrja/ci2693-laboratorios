@@ -16,7 +16,7 @@ public class AdjacencyListGraph<T> implements Graph<T> {
 	 * Sea el grafo G = (V, E) con |V| = n y |E| = m, el HashMap tiene n
 	 * entrada y la suma de las longitudes de las listas de adyacencia es 2m.
 	 */
-	HashMap<T, List<T>> adjacencyListOut = new HashMap<T, List<T>>();
+	HashMap<T, List<T>> adjacencyList = new HashMap<T, List<T>>();
 
 	/*
 	 * Recibe un vértice y lo agrega al grafo. Retorna true si el vértice es
@@ -52,7 +52,7 @@ public class AdjacencyListGraph<T> implements Graph<T> {
 			return false;
 		}
 		// Si el lado ya existe en el grafo, no se agrega el lado y se retorna false.
-		if (adjacencyList.get(from).contains(to)) {
+		if (adjacencyList.get(from).contains(to) || adjacencyList.get(to).contains(from)) {
 			return false;
 		}
 		// Se añade el vértice 'to' a la lista de adyacencia de 'from'.
