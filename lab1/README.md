@@ -22,9 +22,9 @@ Para esta implementacion, consideraremos que el grado de separacion entre una pe
 
 ## Solución
 **Estructura de datos utilizadas:** 
-- Grafo no dirigido *G = (V, E)* representado por una lista de adyacencia.
+- Grafo no dirigido *G = (V, E)* representado por una lista de adyacencia. Se escogió esta estructura de datos porque es la mas eficiente para representar grafos no dirigidos, ya que permite almacenar los vertices y sus aristas de manera eficiente. Además, permite almacenar los vertices de manera ordenada, lo que permite encontrarlos con mayor facilidad. Igualmente, permite almacenar las aristas de manera ordenada, lo que permite encontrarlas con mayor facilidad.
 - Cola de tipo FIFO *(First In First Out)* para los caminos a visitar en el algoritmo BFS.
-- Lista para almacenar los caminos visitados por el algoritmo BFS.
+- Lista para almacenar los caminos visitados por el algoritmo BFS y para retornar el camino mas corto entre dos vertices con BFS.
 
 **Algoritmos utilizados:** 
 - **BFS (Breadth First Search)**: Algoritmo de busqueda en anchura. Se utiliza para encontrar el camino mas corto entre dos nodos de un grafo. En este caso, se utiliza para encontrar el grado de separacion entre dos personas.
