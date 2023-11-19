@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Collection;
 
 interface Graph<T> {
     boolean add(T vertex);

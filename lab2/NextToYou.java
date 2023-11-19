@@ -14,13 +14,8 @@ public class NextToYou{
         System.out.println("Grafo:");
         System.out.println(graph);
 
-        // Obtenemos las componentes fuertemente conexas del grafo
-        List<Set<String>> componentes = componentesFuertementeConexas(graph);
-        // Imprimimos las componentes fuertemente conexas
-        System.out.println("Componentes fuertemente conexas:");
-        imprimirCC(componentes);
-        // Sumamos la cantidad de repartidores necesarios para cubrir todas las componentes fuertemente conexas
-        int repartidores = sumarRepartidores(componentes);
+        // Obtenemos la cantidad de repartidores necesarios para cubrir todas las componentes fuertemente conexas
+        int repartidores = repartidoresNecesarios(graph);
         System.out.println("Repartidores necesarios: " + repartidores);
     }
 
@@ -188,6 +183,22 @@ public class NextToYou{
             color++;
         }
         System.out.println("");
+    }
+
+    /**
+     * Retorna la cantidad de repartidores necesarios para cubrir todas las componentes fuertemente conexas
+     * Complejidad: O(|V|*|E|) donde |V| es la cantidad de vértices y |E| es la cantidad de arcos
+     * @param graph grafo dirigido
+     * @return cantidad de repartidores necesarios
+     */
+    public static int repartidoresNecesarios(Graph<String> graph){
+        // Obtenemos las componentes fuertemente conexas del grafo
+        List<Set<String>> componentes = componentesFuertementeConexas(graph);
+        // Imprimimos las componentes fuertemente conexas
+        System.out.println("Componentes fuertemente conexas:");
+        imprimirCC(componentes);
+        // Sumamos la cantidad de repartidores necesarios para cubrir todas las componentes fuertemente conexas
+        return sumarRepartidores(componentes);
     }
 
     /**
