@@ -10,12 +10,17 @@ import java.util.Stack;
 public class NextToYou{
     public static void main(String[] args){
         String archivo = "Caracas.txt";
+        // Leemos el archivo y obtenemos el grafo
         Graph<String> graph = leerArchivo(archivo);
+        // Si el grafo es null, retornamos
+        if (graph == null) return;
+        // Imprimimos el grafo
         System.out.println("Grafo:");
         System.out.println(graph);
 
         // Obtenemos la cantidad de repartidores necesarios para cubrir todas las componentes fuertemente conexas
         int repartidores = repartidoresNecesarios(graph);
+        // Imprimimos la cantidad de repartidores necesarios
         System.out.println("Repartidores necesarios: " + repartidores);
     }
 
@@ -28,21 +33,40 @@ public class NextToYou{
     */
     public static Graph<String> leerArchivo(String archivo){
         try {
+            // Inicializamos el scanner
             File file = new File(archivo);
             Scanner sc = new Scanner(file);
+            // Si el archivo está vacío, retornamos null
+            if (!sc.hasNextLine()) {
+                System.out.println("El archivo está vacío");
+                sc.close();
+                return null;
+            }
+            // Creamos el grafo
             Graph<String> graph = new AdjacencyListGraph<String>();
+            // Mientras haya una línea siguiente, leemos la línea y agregamos los vértices y arcos al grafo
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 String[] parts = line.split(", ");
+                // Si la línea no tiene 2 partes, retornamos null
+                if (parts.length != 2) {
+                    System.out.println("Error en el formato del archivo");
+                    sc.close();
+                    return null;
+                }
+                // Agregramos los vartices al grafo (si ya están agregados, no se agregan nuevamente)
                 graph.add(parts[0]);
                 graph.add(parts[1]);
+                // Agregamos el arco parts[0] -> parts[1] al grafo
                 graph.connect(parts[0], parts[1]);
             }
+            // Cerramos el scanner y retornamos el grafo
             sc.close();
             return graph;
-
         } catch (Exception e) {
+            // Si hay un error al leer el archivo, retornamos null
             System.out.println("Error al leer el archivo");
+            System.out.println(e);
             return null;
         }
     }
