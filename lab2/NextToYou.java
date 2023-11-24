@@ -198,10 +198,10 @@ public class NextToYou{
     */
     public static void imprimirCC(List<Set<String>> componentes){
         int i = 1;
-        int color = 31;
+        int color = 91;
         // Recorremos las componentes fuertemente conexas
         for (Set<String> componente : componentes) {
-            if (color > 36) color = 31;
+            if (color > 96) color = 91;
             System.out.println(colorear(color, i) + ": " + componente);
             i++;
             color++;
