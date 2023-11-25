@@ -8,23 +8,19 @@ import java.util.Set;
 
 public class Arbitrage {
     public static void main(String[] args) {
-        String exito = "\u001B[92m" + "DINERO FACIL DESDE TU CASA" + "\u001B[0m";
-        String fracaso = "\u001B[91m" + "TODO GUAY DEL PARAGUAY" + "\u001B[0m";
         String archivo = "tasas.txt";
         Graph<String> grafo = leerArchivo(archivo);
         System.out.println("Grafo: ");
         System.out.println(grafo);
         double dineroInicial = 1.0;
         
-        boolean arbitraje = arbitrajePosible(grafo, dineroInicial);
-
-        String mensaje = arbitraje ? exito : fracaso;
-        System.out.println(mensaje);
+        String arbitraje = arbitrajePosible(grafo, dineroInicial);
+        System.out.println(arbitraje);
     }
 
     /**
      * Lee un archivo de texto y retorna un grafo con los datos del archivo
-     * Complejidad: O(|E|*|V|) donde |E| es la cantidad de arcos y |V| es la cantidad de vértices.
+     * Complejidad: O(|E|*log(|V|)) donde |E| es la cantidad de arcos y |V| es la cantidad de vértices.
      * Esta complejidad se debe a que se recorre el archivo que tiene |E| líneas, y el agregar un vértice es O(1).
      * Sin embargo, el agregar un arco es O(|V|) porque se debe buscar el vértice en el HashMap.
      * @param archivo Nombre del archivo
@@ -65,7 +61,7 @@ public class Arbitrage {
 
     /**
      * Calcula el costo de un circuito
-     * Complejidad: O(|E|) donde |E| es la cantidad de arcos del circuito
+     * Complejidad: O(|C|) donde |C| es la cantidad de arcos del circuito
      * @param circuito Lista de arcos que forman el circuito
      * @param dineroInicial Dinero inicial (De forma predeterminada es 1.0)
      * @return Costo del circuito
@@ -179,8 +175,8 @@ public class Arbitrage {
 
     /**
      * Verifica si un camino se puede cerrar
-     * Complejidad: O(|V|) donde |V| es la cantidad de vértices.
-     * Esta complejidad se debe a que se recorren todos los arcos del último vértice del camino.
+     * Complejidad: O(|suc(v)|) donde |suc(v)| es la cantidad de sucesores del último vértice del camino.
+     * Esta complejidad se debe a que se recorren todos los sucesores del último vértice del camino.
      * @param grafo Grafo dirigido
      * @param camino Camino
      * @return True si se puede cerrar, false en caso contrario
@@ -255,17 +251,22 @@ public class Arbitrage {
     
     /**
      * Verifica si hay arbitraje posible en un grafo
-     * Complejidad: O(|V|^2) donde |V| es la cantidad de vértices.
+     * Complejidad: O(|V|^3) donde |V| es la cantidad de vértices.
      * @param grafo Grafo dirigido
      * @param dineroInicial Dinero inicial (De forma predeterminada es 1.0)
-     * @return True si hay arbitraje posible, false en caso contrario
+     * @return "DINERO FACIL DESDE TU CASA" si hay arbitraje, "TODO GUAY DEL PARAGUAY" en caso contrario
      */
-    public static boolean arbitrajePosible(Graph<String> grafo, double dineroInicial) {
+    public static String arbitrajePosible(Graph<String> grafo, double dineroInicial) {
         for (String v : grafo.getAllVertices()){
             if (hayGanancia(grafo, v, dineroInicial)){
-                return true;
+                List<Lado<String>> circuito = circuitoMayorCosto(grafo, v, dineroInicial);
+                double dineroActual = costo(circuito, dineroInicial);
+                System.out.println("Se puede aplicar arbitraje con la siguiente secuencia: " + "\n" + "\u001B[96m" + circuito + "\u001B[0m");
+                System.out.println("Dinero inicial: " + "\u001B[93m" + dineroInicial + "\u001B[0m");
+                System.out.println("Dinero final: " + "\u001B[93m"  + dineroActual + "\u001B[0m");
+                return "\u001B[92m" + "DINERO FACIL DESDE TU CASA" + "\u001B[0m";
             }
         }
-        return false;
+        return "\u001B[91m" + "TODO GUAY DEL PARAGUAY" + "\u001B[0m";
     }
 }
