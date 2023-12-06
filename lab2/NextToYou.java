@@ -126,7 +126,7 @@ public class NextToYou{
         // Marcamos el vértice como visitado y lo agregamos al conjunto de vértices visitados en orden de finalización
         // (esto es, cuando ya no tiene vértices adyacentes sin visitar)
         visited.add(vertex);
-        result.add(vertex);
+        
 
         // Recorremos los vértices adyacentes al vértice actual
         for (String v : graph.getOutwardEdges(vertex)) {
@@ -135,6 +135,9 @@ public class NextToYou{
                 dfs(graph, v, visited, result);
             }
         }
+
+        // Agregamos el vértice al conjunto de vértices visitados en orden de finalización
+        result.add(vertex);
     }
 
     /**
@@ -159,7 +162,7 @@ public class NextToYou{
             // Recorremos los vértices que tengan arcos de entrada en el vértice actual.
             // Estos vértices serán los vértices de salida en el grafo simetrico.
             for (String adjacentVertex : graph.getInwardEdges(vertex)) {
-                transposedGraph.connect(adjacentVertex, vertex);
+                transposedGraph.connect(vertex, adjacentVertex);
             }
         }
 
